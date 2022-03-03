@@ -1,2 +1,2 @@
-# example-basher
-Example of a script with Basher
+# Exemple of Basher
+Exemple of a script built with Basher
