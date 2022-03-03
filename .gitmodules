@@ -1,0 +1,3 @@
+[submodule "vendor/basher"]
+	path = vendor/basher
+	url = https://github.com/LouisOuellet/basher
