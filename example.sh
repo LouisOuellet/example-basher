@@ -14,49 +14,26 @@
 source ${scriptDirectory}vendor/basher/basher
 
 #==============================================================================
-# SCRIPT SETUP
+# SCRIPT PERSONALISATION
 #==============================================================================
 
 # Script Personalisation
-helpOptions="
--v                     => Enable Verbose Mode
--d                     => Enable Debug Mode
--e                     => Compile errors and warnings after execution
--s                     => Send report via email
--f                     => Disable all formatting
-"
+helpOptions="${helpOptions}"
 
 #==============================================================================
 # FUNCTIONS
 #==============================================================================
 
-
+function hello(){
+  echo "Hello World!"
+}
 
 #==============================================================================
 # RUN OPTIONS & FUNCTIONS
 #==============================================================================
 
-format
-elements
-
-while getopts ":vedsf" option; do
+while getopts ":" option; do
 	case "${option}" in
-    v)
-      verboseMode=true
-      ;;
-    d)
-      debugMode=true
-      ;;
-    s)
-      debugSend=true
-      ;;
-    e)
-      debugError=true
-      ;;
-    f)
-      clrformat
-      elements
-      ;;
     \? )
       echo "Invalid option: $OPTARG" 1>&2
       help
@@ -75,7 +52,7 @@ shift $((OPTIND -1))
 # RUN SCRIPT
 #==============================================================================
 
-echo "Hello World!"
+hello
 
 if [[ "${verboseMode}" == "true" ]]; then
   duration=$SECONDS
