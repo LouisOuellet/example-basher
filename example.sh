@@ -10,6 +10,11 @@
 # INIT
 #==============================================================================
 
+# Pull Basher
+if [[ ! -f "${scriptDirectory}vendor/basher/basher" ]]; then
+  git submodule update
+fi
+
 # Source Basher
 source ${scriptDirectory}vendor/basher/basher
 
@@ -32,17 +37,25 @@ function hello(){
 # RUN OPTIONS & FUNCTIONS
 #==============================================================================
 
-while getopts ":" option; do
+parameters=
+while getopts "${opts}" option; do
 	case "${option}" in
-    \? )
-      echo "Invalid option: $OPTARG" 1>&2
-      help
-      exit 0
+    -)
+      case "${OPTARG}" in
+        *=*)
+          val=${OPTARG#*=}
+          opt=${OPTARG%=$val}
+          lookup "-${opt}" ${val}
+          ;;
+        *)
+          val="${!OPTIND}"
+          OPTIND=$((OPTIND +1))
+          lookup "-${OPTARG}" ${val}
+          ;;
+      esac
       ;;
-    : )
-      echo "Invalid option: $OPTARG requires an argument" 1>&2
-      help
-      exit 0
+    *)
+      lookup "${option}" ${OPTARG}
       ;;
 	esac
 done
